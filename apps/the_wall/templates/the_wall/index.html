@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Login and Registration</title>
+	<style>
+		*{
+			margin: 0px;
+			padding: 0px;
+			font-family: 'helvetica neue', arial, sans-serif;
+		}
+		body{
+			background-color: #eef2ff;
+		}
+		#topbar{
+			width: 98%;
+			padding-left: 20px;
+			height: 100px;
+		}
+		#greeting{
+			text-align: right;
+			padding-right: 20px;
+		}
+		h2{
+			padding-top: 10px;
+			font-size: 36px;
+			color: #af0a0f;
+			text-align: center;
+		}
+		.title{
+			color: #117764;
+			padding: 5px;
+		}
+		.message{
+			width: 98%;
+			margin: 0px auto;
+			padding: 5px;
+			background-color: #d6daf0;
+			margin-bottom: 3px;
+		}
+		.comment{
+			width: 90%;
+			padding: 5px;
+			margin: 5px 30px 5px 30px;
+			border-bottom: 1px solid #666;
+			border-left: 1px solid #666;
+			border-top: 1px solid #666;
+			background-color: #eef2ff;
+		}
+		#postform{
+			width: 320px;
+			padding-top: 5px;
+			padding-bottom: 5px;
+			margin: 0px auto;
+			margin-bottom: 10px;
+		}
+		.text{
+			padding: 5px;
+		}
+		#registration{
+			width: 30%;
+			border: 1px solid #666;
+			margin-top: 0 auto;
+			padding: 5px;
+		}
+		#login{
+			width: 30%;
+			border: 1px solid #666;
+			padding: 5px;
+			margin-top: 0 auto;
+		}
+		a{
+			color: #af0a0f;
+		}
+		textarea{
+			margin-top: 10px;
+			background-color: #fff;
+		}
+		.button{
+			background-color: #8993cd;
+			border-color: transparent;
+			padding: 2px;
+			color: white;
+		}
+		.login{
+			background-color: white;
+			padding: 2px;
+			margin: 2px;
+		}
+		.date{
+			color: #af0a0f;
+		}
+	</style>
+</head>
+<body>
+<h2 class='greeting'>Welcome</h2>
+
+<div id='registration'>
+<h3>Register</h3>
+<form action='/register' method='POST'>
+	{% csrf_token %}
+	Username: <input type='text' name='uname'><br>
+	Email: <input type='text' name='email'><br>
+	Password: <input type='text' name='pw'><br>
+	<p><i>*Password must be at least 8 characters, containing at least one capital and lowercase letter and at least one number</i></p>
+	Confirm Password: <input type='text' name='cpw'><br>
+	<input type='submit' value='Register' class='button'>
+</form>
+</div>
+<div id='login'>
+<h3>Login</h3>
+<form action='/login' method='POST'>
+	{% csrf_token %}
+	Email: <input type='text' name='email'><br>
+	Password: <input type='text' name='pw'><br>
+	<input type='submit' value='Login' class='button'>
+</form>
+</div>
+{% for error in errors %}
+	<p style='color:red'><strong>{{error}}</strong></p>
+{% endfor %}
+</body>
+</html>

@@ -1,0 +1,61 @@
+<div id='postform'>
+	<h3 style='text-decoration: underline'>Messages:</h3>
+	<form action='/post' method='POST'>
+		{% csrf_token %}
+		<textarea rows="4" cols="50" name='content' placeholder="Insert messages here."></textarea><br>
+		<input type='submit' value='Post' class='button'>
+	</form>
+</div>
+
+{% for post in posts %}
+	<div class='message' id='{{ post.id }}'>
+		<p class='title'>{{post.user.uname}} <span class='date'>({{post.created_at}})</span></p>
+		<p class='text'>{{post.content}}</p>
+		<form action='/comment/{{ post.id }}' method='POST'>
+			{% csrf_token %}
+			<textarea rows="2" cols="30" name='content' placeholder="Insert comments here."></textarea><br>
+			<input type='submit' value='Comment' class='button'>
+		</form>
+		{% for comment in comments %}
+			{% if comment.post.id == post.id %}
+				<div class='comment'>
+					<p class='title'>{{comment.user.uname}} <span class='date'>({{comment.created_at}})</span></p>
+					<p class='text'>{{comment.content}}</p>
+				</div>
+			{% endif %}
+		{% endfor %}
+	</div>
+{% endfor %}
+
+<script type ="text/javascript" src="http://192.168.1.17:8001/socket.io/socket.io.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var socket = io.connect('http://192.168.1.17:8001');
+		socket.emit("new_user", "new_user");
+		socket.on('broadcast', function (data){
+			$.get('/update', function(res){
+				$('#post_area').html(res);
+			})
+        });	
+
+        $('#postform form').submit(function(){
+			$.post('/post', $(this).serialize(), function(res){
+				socket.emit("new_post", {message: "new post"});
+				$('#post_area').html(res);
+				$('textarea').val('');
+			});
+			return false;
+		});
+
+		$('.message form').submit(function(){
+			var post_id = $(this).parent().attr('id');
+			$.post('/comment/'+post_id, $(this).serialize(), function(res){
+				socket.emit("new_post", {message: "new post"});
+				$('#post_area').html(res);
+				$('textarea').val('');
+			});
+			return false;
+		});
+	});
+
+</script>
