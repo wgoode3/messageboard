@@ -49,16 +49,16 @@ def wall(request):
 def post(request):
 	#handles making a post, renders a partial html
 	Post.postManager.add(request.POST['content'], request.session['user'][0])
-	context = {'posts': Post.postManager.all(), 'comments': Comment.commentManager.all()}
+	context = {'posts': Post.postManager.all().order_by('-created_at'), 'comments': Comment.commentManager.all()}
 	return render(request, 'the_wall/partials/wall_partial.html', context)
 
 def comment(request, post_id):
 	#handles making a comment, renders a partial html
 	Comment.commentManager.add(request.POST['content'], request.session['user'][0], post_id)
-	context = {'posts': Post.postManager.all(), 'comments': Comment.commentManager.all()}
+	context = {'posts': Post.postManager.all().order_by('-created_at'), 'comments': Comment.commentManager.all()}
 	return render(request, 'the_wall/partials/wall_partial.html', context)
 
 def update(request):
 	#this route will handle updating the page when new content is available
-	context = {'posts': Post.postManager.all(), 'comments': Comment.commentManager.all()}
+	context = {'posts': Post.postManager.all().order_by('-created_at'), 'comments': Comment.commentManager.all()}
 	return render(request, 'the_wall/partials/wall_partial.html', context)
