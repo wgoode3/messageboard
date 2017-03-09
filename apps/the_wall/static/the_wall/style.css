@@ -1,15 +1,10 @@
 *{
 	margin: 0px;
 	padding: 0px;
+	font-family: 'helvetica neue', arial, sans-serif;
 }
 body{
 	background-color: #eef2ff;
-}
-#wrapper{
-	width: 95%;
-	height: 100%;
-	margin: 0px auto;
-	font-family: 'helvetica neue', arial, sans-serif;
 }
 #topbar{
 	width: 98%;
@@ -89,7 +84,3 @@ textarea{
 .date{
 	color: #af0a0f;
 }
-.number{
-	color: #000;
-}
-

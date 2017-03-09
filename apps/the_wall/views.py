@@ -43,7 +43,7 @@ def logoff(request):
 
 def wall(request):
 	#this is the place we will render all the posts and comments
-	context = {'posts': Post.postManager.all(), 'comments': Comment.commentManager.all()}
+	context = {'posts': Post.postManager.all().order_by('-created_at'), 'comments': Comment.commentManager.all()}
 	return render(request, 'the_wall/wall.html', context)
 
 def post(request):
