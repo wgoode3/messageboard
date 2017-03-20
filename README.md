@@ -18,7 +18,7 @@ $ python manage.py runserver
 
 To get live updating to work be sure to change
 
-```
+```javascript
 <script type ="text/javascript" src="http://192.168.1.17:8001/socket.io/socket.io.js"></script>
 var socket = io.connect('http://192.168.1.17:8001');
 ```
